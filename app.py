@@ -397,3 +397,18 @@ def invia_promemoria_giorno_prima():
 # Esempio di test:
 # setup_tabella_appuntamenti()
 # invia_promemoria_giorno_prima()
+# --- INTERFACCIA GRAFICA STREAMLIT ---
+st.title("Validatore Configurazione Servizi")
+
+# Un campo dove l'utente può scrivere la sua richiesta
+testo_utente_input = st.text_area("Descrivi l'esigenza dell'impresa:", value=testo_utente)
+
+if st.button("Verifica e Valida"):
+    # Chiamiamo la funzione che hai già scritto nel file
+    is_valido, risultato = valida_configurazione(risposta_ia_grezza)
+    
+    if is_valido:
+        st.success("Configurazione valida con successo!")
+        st.json(risultato)  # Mostra il JSON formattato a schermo
+    else:
+        st.error(risultato)
