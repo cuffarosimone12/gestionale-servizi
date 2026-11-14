@@ -170,7 +170,7 @@ def chiedi_all_ia_di_configurare(frase_utente):
     }
     """
     
-        try:
+try:
         risposta = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=frase_utente,
