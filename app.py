@@ -61,7 +61,7 @@ def valida_configurazione(risposta_ia):
 
 # 4. ESECUZIONE E VERIFICA
 
-if valido:
+if is_valido:
     print(" Configurazione completata con successo! Il software si è adattato:")
     print(f"Settore: {risultato['nome_settore']}")
     print(f"Moduli Attivi: {', '.join(risultato['moduli_da_attivare'])}")
