@@ -50,7 +50,7 @@ def valida_configurazione(risposta_ia):
         campi_obbligatori = ["nome_settore", "moduli_da_attivare", "servizio_principale"]
         for campo in campi_obbligatori:
             if campo not in dati:
-                return False, f"Errore: Il campo '{campo}' manca nel JSON 
+                return False, f"Errore: Il campo '{campo}' manca nel JSON"
 # 4. ESECUZIONE E VERIFICA
 
 if is_valido:
