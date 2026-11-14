@@ -43,24 +43,22 @@ def chiedi_all_ia_di_configurare(frase_utente):
 # 3. IL VALIDATORE PYTHON (Il filtro di sicurezza anti-bug)
 def valida_configurazione(risposta_ia):
     try:
-        # Trasformiamo la stringa in un oggetto Python vero e proprio (Dizionario/JSON)
+        # Trasformiamo la stringa in un oggetto Python vero e proprio
         dati = json.loads(risposta_ia)
         
-        # Verifichiamo che i campi obbligatori esistano per evitare blocchi al programma
-        campi_obbligatori = ["nome_settore", "moduli_da_attivare", "servizio_principale"]
+        # Verifichiamo che i campi obbligatori esistano per evitare crash
+        campi_obbligatori = ["nome_settore", "moduli_da_attivare"]
         for campo in campi_obbligatori:
             if campo not in dati:
-                return False, f"Errore: Il campo '{campo}' manca nel JSON"
-# 4. ESECUZIONE E VERIFICA
+                return False, f"Errore: Il campo '{campo}' manca nel JSON."
 
-if is_valido:
-    print(" Configurazione completata con successo! Il software si è adattato:")
-    print(f"Settore: {risultato['nome_settore']}")
-    print(f"Moduli Attivi: {', '.join(risultato['moduli_da_attivare'])}")
-    print(f"Nota: {risultato.get('avviso_problema', 'Nessuna')}")
-else:
-    print(f" Allarme Sicurezza: {risultato}")
-# --- CONTINUAZIONE DEL PROGRAMMA PYTHON ---
+                
+        return True, dati
+        
+    except json.JSONDecodeError:
+        # Se l'IA ha scritto testo non valido o corrotto, il validatore blocca tutto
+        return False, "Errore: La risposta non è un JSON valido."
+
 
 # 5. IL MOTORE DECISIONALE (Attiva i moduli giusti in base al JSON validato)
 def configura_piattaforma_utente(dati_verificati):
