@@ -5,16 +5,39 @@ import json
 testo_utente = "Ho un'impresa edile, gestiamo cantieri, scadenze dei materiali e operai. Mi dimentico sempre gli ordini."
 
 
-# 2. SIMULAZIONE RISPOSTA IA (L'IA restituisce una stringa formattata come JSON)
-# In produzione qui ci sarà la chiamata API all'IA.
-risposta_ia_grezza = """
-{
-    "nome_settore": "Edilizia e Cantieri",
-    "moduli_da_attivare": ["gestione_cantieri", "ordini_materiali", "gestione_operai"],
-    "servizio_principale": "Costruzioni e Ristrutturazioni",
-    "avviso_problema": "Attivato promemoria automatico per riordino materiali"
-}
-"""
+# Funzione che interroga l'IA in tempo reale
+def chiedi_all_ia_di_configurare(frase_utente):
+    print(f"\n[IA] Analisi della richiesta: {frase_utente}")
+    
+    istruzione_di_sistema = """
+    Sei il motore di Zero-Click Onboarding di un SaaS B2B.
+    Analizza attentamente la descrizione dell'attività fornita dall'utente e adatta i dati a quel tipo di settore specifico.
+    Restituisci ESCLUSIVAMENTE un oggetto JSON valido (senza blocchi di codice markdown o apici) con questa struttura esatta:
+    {
+        "nome_settore": "Nome specifico del settore indicato dall'utente",
+        "moduli_da_attivare": ["modulo_1", "modulo_2"],
+        "servizio_principale": "Descrizione sintetica del servizio principale",
+        "avviso_problema": "Un breve messaggio su misura per il problema riscontrato"
+    }
+    """
+    
+    try:
+        risposta = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=frase_utente,
+            config={
+                "system_instruction": istruzione_di_sistema,
+                "temperature": 0.1
+            }
+        )
+        
+        # Pulizia della risposta da eventuali apici markdown superflui
+        testo_pulito = risposta.text.replace("```json", "").replace("```", "").strip()
+        return json.loads(testo_pulito)
+        
+    except Exception as e:
+        print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
+        return None
 
 
 # 3. IL VALIDATORE PYTHON (Il filtro di sicurezza anti-bug)
