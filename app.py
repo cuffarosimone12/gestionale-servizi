@@ -423,26 +423,23 @@ st.title("Validatore Configurazione Servizi")
 # Un campo dove l'utente può scrivere la sua richiesta
 testo_utente_input = st.text_area("Descrivi l'esigenza dell'impresa:", value=testo_utente)
 
-if st.button("Verifica e Valida"):
-    # Chiamiamo la funzione che hai già scritto nel file
-    is_valido, risultato = valida_configurazione(risposta_ia_grezza)
+    if st.button("Verifica e Valida"):
+    is_valido, risultato = valida_configurazione(chiedi_all_ia_di_configurare(testo_utente_input))
     
     if is_valido:
-               if is_valido:
-            st.success("Configurazione generata con successo!")
+        st.success("Configurazione generata con successo!")
+        
+        col1, col2 = st.columns(2)
+    with col1:
+            st.metric(label="Settore Rilevato", value=risultato.get("nome_settore"))
+    with col2:
+        st.metric(label="Servizio Principale", value=risultato.get("servizio_principale"))
             
-            # Usiamo le metriche e gli elenchi invece del JSON grezzo
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric(label="Settore Rilevato", value=risultato.get("nome_settore"))
-            with col2:
-                st.metric(label="Servizio Principale", value=risultato.get("servizio_principale"))
-                
-            st.markdown("### 🧩 Moduli Attivati per la tua Attività")
-            for modulo in risultato.get("moduli_da_attivare", []):
-                st.markdown(f"- ✅ **{modulo.replace('_', ' ').capitalize()}**")
-                
-            st.info(f"💡 **Nota per l'attività:** {risultato.get('avviso_problema')}")
-
+        st.markdown("### 🧩 Moduli Attivati per la tua Attività")
+        for modulo in risultato.get("moduli_da_attivare", []):
+        st.markdown(f"- ✅ **{modulo.replace('_', ' ').capitalize()}**")
+            
+        st.info(f"💡 **Nota per l'attività:** {risultato.get('avviso_problema')}")
     else:
         st.error(risultato)
+
