@@ -1,3 +1,4 @@
+import streamlit as st
 import json
 
 # 1. TESTO DI PROVA DELL'UTENTE (Simuliamo l'input nel box del sito)
