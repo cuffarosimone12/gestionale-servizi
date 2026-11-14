@@ -159,18 +159,18 @@ def chiedi_all_ia_di_configurare(frase_utente):
     print("\n[IA] Connessione al modello in corso per analizzare la richiesta...")
     
     istruzione_di_sistema = """
-    Sei il motore di Zero-Click Onboarding di un SaaS B2B. 
+    Sei il motore di Zero-Click Onboarding di un SaaS B2B.
     Analizza la descrizione dell'attività fornita dall'utente.
-    Restituisci ESCLUSIVAMENTE un oggetto JSON valido (senza blocchi di codice markdown o testo attorno) con questa struttura esatta:
+    Restituisci ESCLUSIVAMENTE un oggetto JSON valido (senza blocchi di codice markdown) con questa struttura esatta:
     {
         "nome_settore": "Nome breve del settore",
         "moduli_da_attivare": ["modulo_1", "modulo_2"],
         "servizio_principale": "Descrizione sintetica",
-        "avviso_problema": "Un breve messaggio su misura per il problema principale che ha citato"
+        "avviso_problema": "Un breve messaggio su misura per il problema"
     }
     """
     
-try:
+    try:
         risposta = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=frase_utente,
@@ -180,15 +180,9 @@ try:
             }
         )
         return risposta.text
-
- 
-
-except Exception as e:
+ except Exception as e:
         print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
         return None
-        import sqlite3
-from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 
 def genera_preventivo_fattura(cliente_id, tipo_documento="Preventivo"):
     """
