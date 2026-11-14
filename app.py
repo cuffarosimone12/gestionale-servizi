@@ -180,7 +180,7 @@ def chiedi_all_ia_di_configurare(frase_utente):
             }
         )
         return risposta.text
- except Exception as e:
+    except Exception as e:
         print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
         return None
 
