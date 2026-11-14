@@ -430,14 +430,14 @@ testo_utente_input = st.text_area("Descrivi l'esigenza dell'impresa:", value=tes
         st.success("Configurazione generata con successo!")
         
         col1, col2 = st.columns(2)
-        with col1:
+            with col1:
             st.metric(label="Settore Rilevato", value=risultato.get("nome_settore"))
-        with col2:
+            with col2:
             st.metric(label="Servizio Principale", value=risultato.get("servizio_principale"))
             
         st.markdown("### 🧩 Moduli Attivati per la tua Attività")
         for modulo in risultato.get("moduli_da_attivare", []):
-        st.markdown(f"- ✅ **{modulo.replace('_', ' ').capitalize()}**")
+            st.markdown(f"- ✅ **{modulo.replace('_', ' ').capitalize()}**")
             
         st.info(f"💡 **Nota per l'attività:** {risultato.get('avviso_problema')}")
     else:
