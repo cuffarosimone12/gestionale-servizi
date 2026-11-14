@@ -150,11 +150,10 @@ if valido:
     salva_cliente_nel_db(risultato)
 else:
     print(f"\n[STOP] Configurazione interrotta per problemi di sicurezza nei dati.")
-from openai import OpenAI
+from google import genai
 
-# Inizializzazione del client OpenAI con la tua chiave
-client = OpenAI(api_key="sk-proj-7Dme10vdILgrrC6pNY01S552Lx3_7Wh1UpUDXUbaA2jIyJsaQIYCowEA")
-
+# Inizializzazione del client Gemini con i segreti di Streamlit
+client = genai.Client(api_key="AQ.Ab8RN6LGLnF_FRGPpGgbv8w34krQ72DZ12qBZ")
 # Funzione che interroga l'IA per l'onboarding automatico
 def chiedi_all_ia_di_configurare(frase_utente):
     print("\n[IA] Connessione al modello in corso per analizzare la richiesta...")
@@ -171,16 +170,17 @@ def chiedi_all_ia_di_configurare(frase_utente):
     }
     """
     
-    try:
-        risposta = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": istruzione_di_sistema},
-                {"role": "user", "content": frase_utente}
-            ],
-            temperature=0.3
+        try:
+        risposta = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=frase_utente,
+            config={
+                "system_instruction": istruzione_di_sistema,
+                "temperature": 0.3
+            }
         )
-        return risposta.choices[0].message.content
+        return risposta.text
+
     except Exception as e:
         print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
         return Non
