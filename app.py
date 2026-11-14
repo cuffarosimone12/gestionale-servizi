@@ -60,7 +60,6 @@ def valida_configurazione(risposta_ia):
 
 
 # 4. ESECUZIONE E VERIFICA
-valido, risultato = valida_configurazione(risposta_ia_grezza)
 
 if valido:
     print(" Configurazione completata con successo! Il software si è adattato:")
