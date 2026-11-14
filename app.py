@@ -134,21 +134,7 @@ def salva_cliente_nel_db(dati_verificati):
     print("\n[DATABASE] Dati del cliente salvati con successo nel database!")
 
 
-# 8. ESECUZIONE COMPLETA (Lettura + Validazione + Configurazione + Salvataggio)
-if valido:
-    workspace_pronto = configura_piattaforma_utente(risultato)
-    
-    print("\n--- IL TUO SOFTWARE È PRONTO! ---")
-    print(f"📌 Schermata: {workspace_pronto['dashboard_principale']}")
-    for strumento in workspace_pronto['strumenti_attivi']:
-        print(f"   - {strumento}")
-    print(f"⚡ Stato: {workspace_pronto['stato_automazioni']}")
-    
-    # ORA MEMORIZZIAMO IL TUTTO NEL DATABASE!
-    salva_cliente_nel_db(risultato)
-else:
-    print(f"\n[STOP] Configurazione interrotta per problemi di sicurezza nei dati.")
-from google import genai
+
 
 # Inizializzazione del client Gemini con i segreti di Streamlit
 client = genai.Client(api_key="AQ.Ab8RN6LGLnF_FRGPpGgbv8w34krQ72DZ12qBZ")
