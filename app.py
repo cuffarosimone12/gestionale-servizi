@@ -181,9 +181,11 @@ try:
         )
         return risposta.text
 
-    except Exception as e:
+ 
+
+except Exception as e:
         print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
-        return Non
+        return None
         import sqlite3
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
