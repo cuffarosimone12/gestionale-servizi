@@ -92,20 +92,6 @@ def configura_piattaforma_utente(dati_verificati):
     return interfaccia_utente
 
 
-# 6. ESECUZIONE FINALE DELL'ONBOARDING
-if valido:
-    # Richiamiamo la funzione passandogli i dati puliti del passo precedente
-    workspace_pronto = configura_piattaforma_utente(risultato)
-    
-    print("\n--- IL TUO SOFTWARE È PRONTO! ---")
-    print(f"📌 Schermata: {workspace_pronto['dashboard_principale']}")
-    print("🛠️ Strumenti configurati per l'utente:")
-    for strumento in workspace_pronto['strumenti_attivi']:
-        print(f"   - {strumento}")
-    print(f"⚡ Stato: {workspace_pronto['stato_automazioni']}")
-else:
-    print("\n[STOP] Configurazione interrotta per problemi di sicurezza nei dati.")
-import sqlite3
 
 # 7. IL DATABASE (La memoria persistente del SaaS)
 def inizializza_database():
