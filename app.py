@@ -50,15 +50,7 @@ def valida_configurazione(risposta_ia):
         campi_obbligatori = ["nome_settore", "moduli_da_attivare", "servizio_principale"]
         for campo in campi_obbligatori:
             if campo not in dati:
-                return False, f"Errore: Il campo '{campo}' manca nel JSON generato."
-        
-        return True, dati
-
-    except json.JSONDecodeError:
-        # Se l'IA ha scritto testo non valido o corrotto, il validatore lo blocca subito
-        return False, "Errore: La risposta non è un JSON valido."
-
-
+                return False, f"Errore: Il campo '{campo}' manca nel JSON 
 # 4. ESECUZIONE E VERIFICA
 
 if is_valido:
