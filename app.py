@@ -140,13 +140,14 @@ def salva_cliente_nel_db(dati_verificati):
 # Inizializzazione del client Gemini con i segreti di Streamlit
 client = genai.Client(api_key="AQ.Ab8RN6LGLnF_FRGPpGgbv8w34krQ72DZ12qBZ")
 # Funzione che interroga l'IA per l'onboarding automatico
+# Funzione che interroga l'IA per l'onboarding automatico
 def chiedi_all_ia_di_configurare(frase_utente):
-    print("\n[IA] Connessione al modello in corso per analizzare la richiesta...")
+    print(f"\n[IA] Connessione al modello in corso per analizzare la richiesta...")
     
     istruzione_di_sistema = """
     Sei il motore di Zero-Click Onboarding di un SaaS B2B.
     Analizza la descrizione dell'attività fornita dall'utente.
-    Restituisci ESCLUSIVAMENTE un oggetto JSON valido (senza blocchi di codice markdown) con questa struttura esatta:
+    Restituisci ESCLUSIVAMENTE un oggetto JSON valido (senza blocchi markdown o backticks) con questa struttura esatta:
     {
         "nome_settore": "Nome breve del settore",
         "moduli_da_attivare": ["modulo_1", "modulo_2"],
@@ -164,7 +165,14 @@ def chiedi_all_ia_di_configurare(frase_utente):
                 "temperature": 0.3
             }
         )
-        return risposta.text
+        
+        if risposta and risposta.text:
+            # Pulisce eventuali backticks di markdown per restituire un JSON puro
+            testo_pulito = risposta.text.replace("```json", "").replace("```", "").strip()
+            return testo_pulito
+        else:
+            return None
+            
     except Exception as e:
         print(f"[ERRORE API] Impossibile contattare l'IA: {e}")
         return None
