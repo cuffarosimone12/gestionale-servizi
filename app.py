@@ -394,7 +394,9 @@ st.title("Validatore Configurazione Servizi")
 testo_utente_input = st.text_area("Descrivi l'esigenza dell'impresa:", value=testo_utente)
 
 if st.button("Verifica e Valida"):
-    is_valido, risultato = valida_configurazione(chiedi_all_ia_di_configurare(testo_utente_input))
+    risposta_grezza = chiedi_all_ia_di_configurare(testo_utente_input)
+    is_valido, risultato = valida_configurazione(risposta_grezza)
+
     
     if is_valido:
         st.success("Configurazione generata con successo!")
